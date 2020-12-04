@@ -13,7 +13,7 @@ export default class ValueBox extends React.Component {
       return (
         <Statistic size='huge'>
           <Statistic.Label>{this.props.city}</Statistic.Label>
-          <p>Zuletzt aktualisiert: {this.props.lastUpdated === "" ? "unbekannt" : dayjs(this.props.lastUpdated).format('dd. DD.MM.YYYY')}</p>
+          <p>Daten vom: {this.props.lastUpdated === "" ? "unbekannt" : dayjs(this.props.lastUpdated).format('dd. DD.MM.YYYY')}</p>
           <Statistic.Value>{Math.round(this.props.cases7Per100k)}</Statistic.Value>
         </Statistic>
       );
