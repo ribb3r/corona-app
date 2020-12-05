@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider } from 'semantic-ui-react'
+import { Container, Grid, Header } from 'semantic-ui-react'
 import ValueBox from "./ValueBox";
 import api from '../api/covid-19'
 
@@ -28,7 +28,7 @@ export default class ValueBoxGroup extends React.Component {
   }
 
   queryApi() {
-    const cities = ["düsseldorf", "essen", "krefeld", "solingen"];
+    const cities = ["essen", "krefeld", "solingen"];
     cities.forEach ((city) => {
       const params = new URLSearchParams([['q', city]]);
       api.getCasesForOneWeek(params).then(response => response.data.records[0].fields)
@@ -52,13 +52,29 @@ export default class ValueBoxGroup extends React.Component {
 
   render() {
     return (
-      <div>
-        <ValueBox city="Essen" cases7Per100k={this.state.essen.cases7Per100k} lastUpdated={this.state.essen.lastUpdated}/>
-        <Divider />
-        <ValueBox city="Krefeld" cases7Per100k={this.state.krefeld.cases7Per100k} lastUpdated={this.state.krefeld.lastUpdated}/>
-        <Divider />
-        <ValueBox city="Solingen" cases7Per100k={this.state.solingen.cases7Per100k} lastUpdated={this.state.solingen.lastUpdated}/>
-      </div>
+      <Container>
+          <Header as='h1'>COVID-19-Erkrankung</Header>
+          <Header as='h5' dividing>pro 100.000 Einwohner in den letzten 7 Tagen</Header>
+          <div className='ui centered grid'>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column>
+                  <ValueBox city="Essen" cases7Per100k={this.state.essen.cases7Per100k} lastUpdated={this.state.essen.lastUpdated}/>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                  <ValueBox city="Krefeld" cases7Per100k={this.state.krefeld.cases7Per100k} lastUpdated={this.state.krefeld.lastUpdated}/>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row>
+                <Grid.Column>
+                <ValueBox city="Solingen" cases7Per100k={this.state.solingen.cases7Per100k} lastUpdated={this.state.solingen.lastUpdated}/>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+        </div>
+      </Container>
     );
   }
 }
