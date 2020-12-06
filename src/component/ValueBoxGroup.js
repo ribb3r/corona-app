@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Header } from 'semantic-ui-react'
+import { Container, Button, Icon, Grid, Header } from 'semantic-ui-react'
 import ValueBox from "./ValueBox";
 import api from '../api/covid-19'
 
@@ -46,8 +46,6 @@ export default class ValueBoxGroup extends React.Component {
 
   handleClick = () => {
     this.queryApi();
-    this.setState({refresh: true});
-    console.log("refresh");
   };
 
   render() {
@@ -55,6 +53,9 @@ export default class ValueBoxGroup extends React.Component {
       <Container>
           <Header as='h1'>COVID-19-Erkrankung</Header>
           <Header as='h5' dividing>pro 100.000 Einwohner in den letzten 7 Tagen</Header>
+          <Button icon className="ui right floated button" title="aktualisieren" onClick={this.handleClick}>
+            <Icon name="refresh" />
+          </Button>
           <div className='ui centered grid'>
             <Grid>
               <Grid.Row>
