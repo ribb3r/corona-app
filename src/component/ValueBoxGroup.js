@@ -1,6 +1,6 @@
 import React from "react";
 import { trackPromise, promiseTrackerHoc } from 'react-promise-tracker';
-import { Container, Dimmer, Loader, Button, Icon, Grid, Header } from 'semantic-ui-react'
+import { Container, Button, Icon, Grid, Header } from 'semantic-ui-react'
 import ValueBox from "./ValueBox";
 import api from '../api/covid-19'
 
@@ -50,36 +50,7 @@ class ValueBoxGroup extends React.Component {
     this.queryApi();
   };
 
-  render() {
-    let mainContent;
-    if (this.props.promiseInProgress) {
-      mainContent = <div>
-        <Dimmer active inverted>
-          <Loader inverted size='large'>Wird geladen</Loader>
-        </Dimmer>
-      </div>;
-    } else {
-      mainContent = <div className='ui centered grid'>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column>
-                <ValueBox city="Essen" cases7Per100k={this.state.essen.cases7Per100k} lastUpdated={this.state.essen.lastUpdated}/>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <ValueBox city="Krefeld" cases7Per100k={this.state.krefeld.cases7Per100k} lastUpdated={this.state.krefeld.lastUpdated}/>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-              <ValueBox city="Solingen" cases7Per100k={this.state.solingen.cases7Per100k} lastUpdated={this.state.solingen.lastUpdated}/>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-      </div>
-    }
-    
+  render() {    
     return (
       <Container>
         <Header as='h1'>COVID-19-Erkrankung</Header>
@@ -87,7 +58,40 @@ class ValueBoxGroup extends React.Component {
         <Button icon className="ui right floated button" title="aktualisieren" onClick={this.handleClick}>
           <Icon name="refresh" />
         </Button>
-        {mainContent}
+        <div className='ui centered grid'>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column>
+                <ValueBox
+                  city="Essen"
+                  cases7Per100k={this.state.essen.cases7Per100k}
+                  lastUpdated={this.state.essen.lastUpdated}
+                  promiseInProgress={this.props.promiseInProgress}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <ValueBox
+                  city="Krefeld"
+                  cases7Per100k={this.state.krefeld.cases7Per100k}
+                  lastUpdated={this.state.krefeld.lastUpdated}
+                  promiseInProgress={this.props.promiseInProgress}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+              <ValueBox
+                city="Solingen"
+                cases7Per100k={this.state.solingen.cases7Per100k}
+                lastUpdated={this.state.solingen.lastUpdated}
+                promiseInProgress={this.props.promiseInProgress}
+              />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </div>
         </Container>
       )
     };
