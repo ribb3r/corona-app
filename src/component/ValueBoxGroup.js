@@ -16,6 +16,10 @@ class ValueBoxGroup extends React.Component {
         lastUpdated: "",
         cases7Per100k: 0
       },
+      neuss: {
+        lastUpdated: "",
+        cases7Per100k: 0
+      },
       solingen: {
         lastUpdated: "",
         cases7Per100k: 0
@@ -29,7 +33,7 @@ class ValueBoxGroup extends React.Component {
   }
 
   queryApi() {
-    const cities = ["essen", "krefeld", "solingen"];
+    const cities = ["essen", "krefeld", "neuss", "solingen"];
     cities.forEach ((city) => {
       const params = new URLSearchParams([['q', city]]);
       trackPromise(
@@ -76,6 +80,16 @@ class ValueBoxGroup extends React.Component {
                   city="Krefeld"
                   cases7Per100k={this.state.krefeld.cases7Per100k}
                   lastUpdated={this.state.krefeld.lastUpdated}
+                  promiseInProgress={this.props.promiseInProgress}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <ValueBox
+                  city="Neuss"
+                  cases7Per100k={this.state.neuss.cases7Per100k}
+                  lastUpdated={this.state.neuss.lastUpdated}
                   promiseInProgress={this.props.promiseInProgress}
                 />
               </Grid.Column>
