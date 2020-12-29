@@ -87,7 +87,7 @@ class ValueBoxGroup extends React.Component {
             <Grid.Row>
               <Grid.Column>
                 <ValueBox
-                  city="Neuss"
+                  city="Kreis Neuss"
                   cases7Per100k={this.state.neuss.cases7Per100k}
                   lastUpdated={this.state.neuss.lastUpdated}
                   promiseInProgress={this.props.promiseInProgress}
