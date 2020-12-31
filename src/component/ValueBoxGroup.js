@@ -33,8 +33,7 @@ class ValueBoxGroup extends React.Component {
   }
 
   queryApi() {
-    const cities = ["essen", "krefeld", "neuss", "solingen"];
-    cities.forEach ((city) => {
+    Object.keys(this.state).forEach ((city) => {
       const params = new URLSearchParams([['q', city]]);
       trackPromise(
         api.getCasesForOneWeek(params).then(response => response.data.records[0].fields)
