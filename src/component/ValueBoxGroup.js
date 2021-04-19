@@ -8,6 +8,10 @@ class ValueBoxGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      düsseldorf: {
+        lastUpdated: "",
+        cases7Per100k: 0
+      },
       essen: {
         lastUpdated: "",
         cases7Per100k: 0
@@ -63,6 +67,16 @@ class ValueBoxGroup extends React.Component {
         </Button>
         <div className='ui centered grid'>
           <Grid>
+          <Grid.Row>
+              <Grid.Column>
+                <ValueBox
+                  city="Düsseldorf"
+                  cases7Per100k={this.state.düsseldorf.cases7Per100k}
+                  lastUpdated={this.state.düsseldorf.lastUpdated}
+                  promiseInProgress={this.props.promiseInProgress}
+                />
+              </Grid.Column>
+            </Grid.Row>
             <Grid.Row>
               <Grid.Column>
                 <ValueBox
