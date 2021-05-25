@@ -1,6 +1,6 @@
 import React from "react";
 import { trackPromise, promiseTrackerHoc } from 'react-promise-tracker';
-import { Container, Button, Icon, Grid, Header } from 'semantic-ui-react'
+import { Container, Button, Icon, Grid, Header, Message } from 'semantic-ui-react'
 import ValueBox from "./ValueBox";
 import api from '../api/covid-19'
 
@@ -59,6 +59,9 @@ class ValueBoxGroup extends React.Component {
   render() {    
     return (
       <Container>
+        <Message info>
+          <Message.Header>Tägliche Aktualisierung gegen 7:30 Uhr</Message.Header>
+        </Message>
         <Header as='h1'>COVID-19-Erkrankung</Header>
         <Header as='h5' dividing>pro 100.000 Einwohner in den letzten 7 Tagen</Header>
         <Button icon className="ui right floated button" title="aktualisieren" onClick={this.handleClick}>
