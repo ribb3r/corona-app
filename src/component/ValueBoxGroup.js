@@ -8,23 +8,23 @@ class ValueBoxGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      düsseldorf: {
+      "05111": {
         lastUpdated: "",
         cases7Per100k: 0
       },
-      essen: {
+      "05113": {
         lastUpdated: "",
         cases7Per100k: 0
       },
-      krefeld: {
+      "05114": {
         lastUpdated: "",
         cases7Per100k: 0
       },
-      neuss: {
+      "05162": {
         lastUpdated: "",
         cases7Per100k: 0
       },
-      solingen: {
+      "05122": {
         lastUpdated: "",
         cases7Per100k: 0
       }
@@ -38,13 +38,12 @@ class ValueBoxGroup extends React.Component {
 
   queryApi() {
     Object.keys(this.state).forEach ((city) => {
-      const params = new URLSearchParams([['q', city]]);
       trackPromise(
-        api.getCasesForOneWeek(params).then(response => response.data.records[0].fields)
+        api.getCasesForOneWeek(city).then(response => response.data)
           .then((data) => {
             let updatedCity = {};
-            updatedCity.cases7Per100k = data.cases7_per_100k;
-            updatedCity.lastUpdated = data.last_update;
+            updatedCity.cases7Per100k = data.data[city].weekIncidence;
+            updatedCity.lastUpdated = data.meta.lastUpdate;
             this.setState({ [`${city}`]: updatedCity })
           })
           .catch(error => {
@@ -71,8 +70,8 @@ class ValueBoxGroup extends React.Component {
               <Grid.Column>
                 <ValueBox
                   city="Düsseldorf"
-                  cases7Per100k={this.state.düsseldorf.cases7Per100k}
-                  lastUpdated={this.state.düsseldorf.lastUpdated}
+                  cases7Per100k={this.state["05111"].cases7Per100k}
+                  lastUpdated={this.state["05111"].lastUpdated}
                   promiseInProgress={this.props.promiseInProgress}
                 />
               </Grid.Column>
@@ -81,8 +80,8 @@ class ValueBoxGroup extends React.Component {
               <Grid.Column>
                 <ValueBox
                   city="Essen"
-                  cases7Per100k={this.state.essen.cases7Per100k}
-                  lastUpdated={this.state.essen.lastUpdated}
+                  cases7Per100k={this.state["05113"].cases7Per100k}
+                  lastUpdated={this.state["05113"].lastUpdated}
                   promiseInProgress={this.props.promiseInProgress}
                 />
               </Grid.Column>
@@ -91,8 +90,8 @@ class ValueBoxGroup extends React.Component {
               <Grid.Column>
                 <ValueBox
                   city="Krefeld"
-                  cases7Per100k={this.state.krefeld.cases7Per100k}
-                  lastUpdated={this.state.krefeld.lastUpdated}
+                  cases7Per100k={this.state["05114"].cases7Per100k}
+                  lastUpdated={this.state["05114"].lastUpdated}
                   promiseInProgress={this.props.promiseInProgress}
                 />
               </Grid.Column>
@@ -101,8 +100,8 @@ class ValueBoxGroup extends React.Component {
               <Grid.Column>
                 <ValueBox
                   city="Kreis Neuss"
-                  cases7Per100k={this.state.neuss.cases7Per100k}
-                  lastUpdated={this.state.neuss.lastUpdated}
+                  cases7Per100k={this.state["05162"].cases7Per100k}
+                  lastUpdated={this.state["05162"].lastUpdated}
                   promiseInProgress={this.props.promiseInProgress}
                 />
               </Grid.Column>
@@ -111,8 +110,8 @@ class ValueBoxGroup extends React.Component {
               <Grid.Column>
               <ValueBox
                 city="Solingen"
-                cases7Per100k={this.state.solingen.cases7Per100k}
-                lastUpdated={this.state.solingen.lastUpdated}
+                cases7Per100k={this.state["05122"].cases7Per100k}
+                lastUpdated={this.state["05122"].lastUpdated}
                 promiseInProgress={this.props.promiseInProgress}
               />
               </Grid.Column>
