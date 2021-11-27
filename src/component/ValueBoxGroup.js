@@ -8,12 +8,14 @@ class ValueBoxGroup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      "hospitalizationCurrent": 0,
+      "hospitalization7DaysAgo": 0,
       "05111": {
         lastUpdated: "",
         cases7Per100k: 0
       },
       "05113": {
-        lastUpdated: "",
+        lastUpdated: "",  
         cases7Per100k: 0
       },
       "05114": {
@@ -36,6 +38,8 @@ class ValueBoxGroup extends React.Component {
     setInterval(() => this.queryApi(), 1000 * 60 * 60 * 6)
   }
 
+  hospitalizationChange = () => this.state.hospitalizationCurrent - this.state.hospitalization7DaysAgo;
+
   queryApi() {
     Object.keys(this.state).forEach ((city) => {
       trackPromise(
@@ -50,17 +54,31 @@ class ValueBoxGroup extends React.Component {
             console.error(error)
           })
       );
-  })}
+  });
+  api.getHospitalization(7).then(response => response.data)
+    .then((data) => {
+      this.setState({ hospitalizationCurrent: data.data["NW"].history[[data.data["NW"].history.length-1]].incidence7Days });
+      this.setState({ hospitalization7DaysAgo: data.data["NW"].history[[data.data["NW"].history.length-8]].incidence7Days });
+    })
+    .catch(error => {
+      console.error(error)
+    })
+}
 
   handleClick = () => {
     this.queryApi();
   };
 
-  render() {    
+  render() {
+    let color = 'green';
+    if (this.hospitalizationChange > 0) {
+      color = 'red';
+    }
+
     return (
       <Container>
         <Message info>
-          <Message.Header>Tägliche Aktualisierung gegen 7:30 Uhr</Message.Header>
+          <Message.Header>Hospitalisierungsrate NRW: {this.state.hospitalizationCurrent} (<font color={color}>{this.hospitalizationChange()}</font>)</Message.Header>
         </Message>
         <Header as='h1'>COVID-19-Erkrankung</Header>
         <Header as='h5' dividing>pro 100.000 Einwohner in den letzten 7 Tagen</Header>

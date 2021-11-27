@@ -5,5 +5,6 @@ const httpClient = axios.create({
 })
 
 export default {
+  getHospitalization: daysInThePast => httpClient.get(`states/history/hospitalization`),
   getCasesForOneWeek: cityId => httpClient.get(`districts/${cityId}`)
 }
