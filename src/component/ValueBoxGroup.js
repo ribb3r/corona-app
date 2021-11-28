@@ -38,7 +38,7 @@ class ValueBoxGroup extends React.Component {
     setInterval(() => this.queryApi(), 1000 * 60 * 60 * 6)
   }
 
-  hospitalizationChange = () => this.state.hospitalizationCurrent - this.state.hospitalization7DaysAgo;
+  hospitalizationChange = () => (this.state.hospitalizationCurrent - this.state.hospitalization7DaysAgo).toFixed(2);
 
   queryApi() {
     Object.keys(this.state).forEach ((city) => {
